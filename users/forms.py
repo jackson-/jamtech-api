@@ -6,23 +6,23 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'name', 'employer')
+        fields = ('email', 'name', 'employer')
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields =  fields = ('username', 'email', 'name', 'employer')
+        fields =  fields = ('email', 'name', 'employer')
 
 
-class BusinessProfileCreationForm(UserCreationForm):
+class BusinessProfileCreationForm(forms.ModelForm):
 
     class Meta:
         model = BusinessProfile
         fields = ('company_name', 'industry_category', 'industry_segment',
      'experience_level', 'summary', 'user')
 
-class BusinessProfileChangeForm(UserChangeForm):
+class BusinessProfileChangeForm(forms.ModelForm):
 
     class Meta:
         model = BusinessProfile
@@ -30,13 +30,13 @@ class BusinessProfileChangeForm(UserChangeForm):
      'experience_level', 'summary', 'user')
 
 
-class SpecialCredentialCreationForm(UserCreationForm):
+class SpecialCredentialCreationForm(forms.ModelForm):
 
     class Meta:
         model = SpecialCredential
         fields = ('name', 'website', 'business')
 
-class SpecialCredentialChangeForm(UserChangeForm):
+class SpecialCredentialChangeForm(forms.ModelForm):
 
     class Meta:
         model = SpecialCredential
