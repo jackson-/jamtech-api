@@ -11,3 +11,6 @@
 
 ## How to run server
 - `python3 manage.py runserver`
+
+## Live link
+[jamtech-api-ebs](http://jamtech-django-env.8yzvisztqt.us-east-1.elasticbeanstalk.com/)
