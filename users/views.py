@@ -10,6 +10,9 @@ class UserListView(generics.ListAPIView):
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.UserSerializer
 
+    def get_queryset(self):
+        return models.CustomUser.objects.filter(**self.request.GET.dict())
+
 class UserDetailView(generics.RetrieveAPIView):
     lookup_field = "id"
     queryset = models.CustomUser.objects.all()
@@ -42,3 +45,16 @@ class ChangePasswordView(generics.UpdateAPIView):
                 return Response("Success.", status=status.HTTP_200_OK)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ProfileListView(generics.ListCreateAPIView):
+    queryset = models.BusinessProfile.objects.select_related('user').all()
+    serializer_class = serializers.ProfileSerializer
+
+    def get_queryset(self):
+        breakpoint()
+        return models.BusinessProfile.objects.select_related('user').filter(**self.request.GET.dict())
+
+class ProfileDetailView(generics.RetrieveAPIView):
+    lookup_field = "id"
+    queryset = models.BusinessProfile.objects.select_related('user').all()
+    serializer_class = serializers.ProfileSerializer()
