@@ -2,6 +2,8 @@
 
 ## Installation Instructions
 
+- `git clone https://github.com/Robo-romeski/jamtech-api.git`
+- `cd jamtech-api`
 - `pip3 install virtualenv`
 - `virtualenv env`
 - `source env/bin/activate`
