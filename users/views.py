@@ -14,7 +14,7 @@ class StandardResultsSetPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 1000    
 
-class UserView(generics.ListCreateAPIView):
+class UserListView(generics.ListCreateAPIView):
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.UserSerializer
     pagination_class = StandardResultsSetPagination
@@ -55,9 +55,9 @@ class ChangePasswordView(generics.UpdateAPIView):
 class ProfileListView(generics.ListCreateAPIView):
     queryset = models.BusinessProfile.objects.select_related('user').all()
     serializer_class = serializers.ProfileSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        breakpoint()
         return models.BusinessProfile.objects.select_related('user').filter(**self.request.GET.dict())
 
 class ProfileDetailView(generics.RetrieveAPIView):
