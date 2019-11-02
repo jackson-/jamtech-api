@@ -1,17 +1,23 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets import ModelViewSet
 from . import serializers
-from rest_framework.permissions import IsAuthenticated   
+from rest_framework.permissions import IsAuthenticated
 
 from . import models
 from . import serializers
 
-class UserListView(generics.ListAPIView):
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 1000    
+
+class UserView(generics.ListCreateAPIView):
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.UserSerializer
-
-    def get_queryset(self):
-        return models.CustomUser.objects.filter(**self.request.GET.dict())
+    pagination_class = StandardResultsSetPagination
 
 class UserDetailView(generics.RetrieveAPIView):
     lookup_field = "id"
