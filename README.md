@@ -16,3 +16,21 @@
 
 ## Live link
 [jamtech-api-ebs](http://jamtech-django-env.8yzvisztqt.us-east-1.elasticbeanstalk.com/)
+
+
+## Pagination Instructions
+Example Request URL:
+`GET https://api.example.org/accounts/?page=4`
+
+Example Response:
+`
+HTTP 200 OK
+{
+    "count": 1023
+    "next": "https://api.example.org/accounts/?page=5",
+    "previous": "https://api.example.org/accounts/?page=3",
+    "results": [
+       …
+    ]
+}
+`
