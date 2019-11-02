@@ -20,17 +20,31 @@
 
 ## Pagination Instructions
 Example Request URL:
-`GET https://api.example.org/accounts/?page=4`
+`GET https://api.example.org/users/?page=4`
 
 Example Response:
 `
 HTTP 200 OK
 {
     "count": 1023
-    "next": "https://api.example.org/accounts/?page=5",
-    "previous": "https://api.example.org/accounts/?page=3",
+    "next": "https://api.example.org/users/?page=5",
+    "previous": "https://api.example.org/users/?page=3",
     "results": [
        …
     ]
 }
 `
+
+## Filter Instructions
+Below are the queryable properties for business profiles:
+- company_name
+- industry_category
+- industry_segment
+- experience_level
+- recent_project
+- work_seeking
+- summary
+- zipcode
+
+To filter for a property, use a GET parameter, similar to pagination above.
+`GET https://api.example.org/users/profiles/?zipcode=11221`
