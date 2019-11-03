@@ -56,9 +56,7 @@ class ProfileListView(generics.ListCreateAPIView):
     queryset = models.BusinessProfile.objects.select_related('user').all()
     serializer_class = serializers.ProfileSerializer
     pagination_class = StandardResultsSetPagination
-
-    def get_queryset(self):
-        return models.BusinessProfile.objects.select_related('user').filter(**self.request.GET.dict())
+    filterset_fields = [f.name for f in models.BusinessProfile._meta.fields]
 
 class ProfileDetailView(generics.RetrieveAPIView):
     lookup_field = "id"
