@@ -12,12 +12,23 @@ class MyUserManager(BaseUserManager):
     """
     use_in_migrations = True
 
+    def _create_user(self, email, name, employer, password=None):
+        """
+        Creates and saves a User with the given email and password.
+        """
+        user = self.model(
+            email=self.normalize_email(email),
+            employer=employer,
+            name=name,
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+    
     def create_user(self, email, name, employer, password=None):
         """
         Creates and saves a User with the given email and password.
         """
-        breakpoint()
-        print("WE IUN HERE")
         user = self.model(
             email=self.normalize_email(email),
             employer=employer,
