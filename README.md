@@ -10,8 +10,10 @@
 - `pip3 install -r reqs.txt`
 - `python3 manage.py makemigrations`
 - `python3 manage.py migrate`
+- `python3 manage.py runserver`
 
 ## How to run server
+- `source env/bin/activate`
 - `python3 manage.py runserver`
 
 ## Live link
