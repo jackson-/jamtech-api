@@ -34,7 +34,6 @@ class MyUserManager(BaseUserManager):
             email=self.normalize_email(email),
             employer=employer,
             name=name,
-            **kwargs
         )
         user.set_password(password)
         user.save(using=self._db)

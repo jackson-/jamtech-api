@@ -1,18 +1,26 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.utils.translation import ugettext_lazy as _
 from .models import CustomUser, BusinessProfile, SpecialCredential
 
 class CustomUserCreationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs): 
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs) 
+        self.fields['employer'] = forms.BooleanField(label=_("Employer?"))
 
     class Meta:
         model = CustomUser
         fields = ('email', 'name', 'employer')
+        
 
 class CustomUserChangeForm(UserChangeForm):
+    def __init__(self, *args, **kwargs): 
+        super(CustomUserChangeForm, self).__init__(*args, **kwargs) 
+        self.fields['employer'] = forms.BooleanField(label=_("Employer?"))
 
     class Meta:
         model = CustomUser
-        fields =  fields = ('email', 'name', 'employer')
+        fields = ('email', 'name', 'employer')
 
 
 class BusinessProfileCreationForm(forms.ModelForm):

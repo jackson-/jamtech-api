@@ -10,10 +10,26 @@ from .forms import (
 from .models import CustomUser, BusinessProfile, SpecialCredential
 
 class CustomUserAdmin(UserAdmin):
+    def __init__(self, *args, **kwargs):
+        super(CustomUserAdmin, self).__init__(*args, **kwargs) 
+
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
     list_display = ['email', 'name', 'is_staff', 'employer']
+    # exclude = ('last_name', 'date_joined', 'first_name')
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'name', 'password1', 'password2','employer')
+        }),
+    )
+    fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'name','employer')
+        }),
+    )
 
 admin.site.register(CustomUser, CustomUserAdmin)
 
