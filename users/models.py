@@ -12,7 +12,7 @@ class MyUserManager(BaseUserManager):
     """
     use_in_migrations = True
 
-    def _create_user(self, email, name, employer, password=None):
+    def _create_user(self, email, name, employer, password=None, **kwargs):
         """
         Creates and saves a User with the given email and password.
         """
@@ -20,6 +20,7 @@ class MyUserManager(BaseUserManager):
             email=self.normalize_email(email),
             employer=employer,
             name=name,
+            **kwargs
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -33,6 +34,7 @@ class MyUserManager(BaseUserManager):
             email=self.normalize_email(email),
             employer=employer,
             name=name,
+            **kwargs
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -47,7 +49,7 @@ class MyUserManager(BaseUserManager):
             raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(email, password=password, **extra_fields)
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(blank=True, max_length=255, null=True)
