@@ -6,7 +6,7 @@ from .models import CustomUser, BusinessProfile, SpecialCredential
 class CustomUserCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs): 
         super(CustomUserCreationForm, self).__init__(*args, **kwargs) 
-        self.fields['employer'] = forms.BooleanField(label=_("Employer?"))
+        self.fields['employer'] = forms.BooleanField(label=_("Employer?"), initial=True, required=False)
 
     class Meta:
         model = CustomUser
