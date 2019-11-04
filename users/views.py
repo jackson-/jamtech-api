@@ -61,4 +61,4 @@ class ProfileListView(generics.ListCreateAPIView):
 class ProfileDetailView(generics.RetrieveAPIView):
     lookup_field = "id"
     queryset = models.BusinessProfile.objects.select_related('user').all()
-    serializer_class = serializers.ProfileSerializer()
+    serializer_class = serializers.ProfileSerializer

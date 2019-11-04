@@ -69,7 +69,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.BusinessProfile
-        fields = ('company_name', 'industry_category', 'industry_segment', 'experience_level',
+        fields = ('id','company_name', 'industry_category', 'industry_segment', 'experience_level',
             'recent_project', 'work_seeking', 'summary', 'zipcode', 'user')
 
     

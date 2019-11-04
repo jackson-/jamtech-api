@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'api',
     # 'users',
     'users.apps.UsersConfig',
+    'corsheaders',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -86,6 +87,12 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100
 }
 
+CORS_ORIGIN_WHITELIST = [
+    "https://jamtechnyc.com",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -94,6 +101,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'drfx.urls'
