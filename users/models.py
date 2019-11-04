@@ -54,7 +54,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(blank=True, max_length=255, null=True)
     name = models.CharField(blank=True, max_length=255)
     email = models.EmailField(unique=True)
-    employer = models.BooleanField(blank=False, null=False)
+    employer = models.BooleanField(default=False)
 
     is_staff = models.BooleanField(
         _('staff status'),
