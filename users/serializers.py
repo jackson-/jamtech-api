@@ -2,10 +2,7 @@ from rest_framework import serializers
 from rest_auth.registration.serializers import RegisterSerializer
 from . import models
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.CustomUser
-        fields = ('id', 'email', 'name', 'is_staff', 'employer')
+
 
 class ChangePasswordSerializer(serializers.Serializer):
     """
@@ -43,7 +40,7 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.CustomUser
-        fields = ('email','name','employer')
+        fields = ('email','name','employer', 'profile')
         read_only_fields = ('email')
 
 
@@ -59,7 +56,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             'work_seeking': self.validated_data.get('work_seeking', ''),
             'summary': self.validated_data.get('summary', ''),
             'zipcode': self.validated_data.get('zipcode', ''),
-            'user': self.validated_data.get('user', ''),
         }
         
 
@@ -70,6 +66,10 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.BusinessProfile
         fields = ('id','company_name', 'industry_category', 'industry_segment', 'experience_level',
-            'recent_project', 'work_seeking', 'summary', 'zipcode', 'user')
+            'recent_project', 'work_seeking', 'summary', 'zipcode')
 
-    
+class UserSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(read_only=True)
+    class Meta:
+        model = models.CustomUser
+        fields = ('id', 'email', 'name', 'is_staff', 'employer', 'profile')
