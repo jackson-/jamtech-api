@@ -50,11 +50,33 @@ class MyUserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
         return self._create_user(email, password=password, **extra_fields)
 
+
+
+class BusinessProfile(models.Model):
+    company_name = models.CharField(blank=True, max_length=255)
+    industry_category = models.CharField(blank=True, max_length=255)
+    industry_segment = models.CharField(blank=True, max_length=255)
+    experience_level = models.CharField(blank=True, max_length=255)
+    recent_project = models.CharField(blank=True, max_length=255)
+    work_seeking = models.CharField(blank=True, max_length=255)
+    summary = models.CharField(blank=True, max_length=255)
+    zipcode = models.CharField(blank=True, max_length=10)
+
+    def __str__(self):
+        return self.company_name
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(blank=True, max_length=255, null=True)
     name = models.CharField(blank=True, max_length=255)
     email = models.EmailField(unique=True)
     employer = models.BooleanField(default=False)
+    profile = models.ForeignKey(
+        BusinessProfile,
+        on_delete=models.CASCADE,
+        default=None,
+        blank=True,
+        null=True
+    )
 
     is_staff = models.BooleanField(
         _('staff status'),
@@ -78,24 +100,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-
-
-class BusinessProfile(models.Model):
-    company_name = models.CharField(blank=True, max_length=255)
-    industry_category = models.CharField(blank=True, max_length=255)
-    industry_segment = models.CharField(blank=True, max_length=255)
-    experience_level = models.CharField(blank=True, max_length=255)
-    recent_project = models.CharField(blank=True, max_length=255)
-    work_seeking = models.CharField(blank=True, max_length=255)
-    summary = models.CharField(blank=True, max_length=255)
-    zipcode = models.CharField(blank=True, max_length=10)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-
-    def __str__(self):
-        return self.company_name
 
 class SpecialCredential(models.Model):
     name = models.CharField(blank=True, max_length=255)

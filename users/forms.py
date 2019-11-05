@@ -10,17 +10,17 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'name', 'employer')
+        fields = ('email', 'name', 'employer', 'profile')
         
 
 class CustomUserChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs): 
         super(CustomUserChangeForm, self).__init__(*args, **kwargs) 
-        self.fields['employer'] = forms.BooleanField(label=_("Employer?"))
+        self.fields['employer'] = forms.BooleanField(label=_("Employer?"), initial=True, required=False)
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'name', 'employer')
+        fields = ('email', 'name', 'employer', 'profile')
 
 
 class BusinessProfileCreationForm(forms.ModelForm):
@@ -28,14 +28,14 @@ class BusinessProfileCreationForm(forms.ModelForm):
     class Meta:
         model = BusinessProfile
         fields = ('company_name', 'industry_category', 'industry_segment',
-     'experience_level', 'summary', 'user')
+     'experience_level', 'summary')
 
 class BusinessProfileChangeForm(forms.ModelForm):
 
     class Meta:
         model = BusinessProfile
         fields =  fields = ('company_name', 'industry_category', 'industry_segment',
-     'experience_level', 'summary', 'user')
+     'experience_level', 'summary')
 
 
 class SpecialCredentialCreationForm(forms.ModelForm):

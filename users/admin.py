@@ -21,13 +21,13 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'name', 'password1', 'password2','employer')
+            'fields': ('email', 'name', 'password1', 'password2','employer', 'profile')
         }),
     )
     fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'name','employer')
+            'fields': ('email', 'name','employer', 'profile')
         }),
     )
 
@@ -38,7 +38,7 @@ class BusinessProfileAdmin(admin.ModelAdmin):
     form = BusinessProfileChangeForm
     model = BusinessProfile
     list_display = ['company_name', 'industry_category', 'industry_segment',
-     'experience_level', 'summary', 'user']
+     'experience_level', 'summary']
 
 admin.site.register(BusinessProfile, BusinessProfileAdmin)
 
