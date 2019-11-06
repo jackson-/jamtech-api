@@ -66,7 +66,7 @@ class ChangePasswordView(generics.UpdateAPIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProfileListView(generics.ListCreateAPIView):
-    queryset = models.BusinessProfile.objects.select_related('user').all()
+    queryset = models.BusinessProfile.objects.all()
     serializer_class = serializers.ProfileSerializer
     pagination_class = StandardResultsSetPagination
     filterset_fields = [f.name for f in models.BusinessProfile._meta.fields]
@@ -74,6 +74,6 @@ class ProfileListView(generics.ListCreateAPIView):
 
 class ProfileDetailView(generics.RetrieveAPIView):
     lookup_field = "id"
-    queryset = models.BusinessProfile.objects.select_related('user').all()
+    queryset = models.BusinessProfile.objects.all()
     serializer_class = serializers.ProfileSerializer
     authentication_classes = (TokenAuthentication,)
