@@ -67,7 +67,7 @@ class BusinessProfile(models.Model):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(blank=True, max_length=255, null=True)
-    name = models.CharField(blank=True, max_length=255)
+    name = models.CharField(blank=True, null=True, max_length=255)
     email = models.EmailField(unique=True)
     employer = models.BooleanField(default=False)
     profile = models.ForeignKey(
