@@ -38,7 +38,7 @@ class BusinessProfileAdmin(admin.ModelAdmin):
     form = BusinessProfileChangeForm
     model = BusinessProfile
     list_display = ['company_name', 'industry_category', 'industry_segment',
-     'experience_level', 'summary']
+     'experience_level', 'summary', 'zipcode', 'recent_project', 'work_seeking']
 
 admin.site.register(BusinessProfile, BusinessProfileAdmin)
 

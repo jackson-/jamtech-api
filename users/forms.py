@@ -28,14 +28,14 @@ class BusinessProfileCreationForm(forms.ModelForm):
     class Meta:
         model = BusinessProfile
         fields = ('company_name', 'industry_category', 'industry_segment',
-     'experience_level', 'summary')
+     'experience_level', 'summary', 'zipcode', 'recent_project', 'work_seeking')
 
 class BusinessProfileChangeForm(forms.ModelForm):
 
     class Meta:
         model = BusinessProfile
         fields =  fields = ('company_name', 'industry_category', 'industry_segment',
-     'experience_level', 'summary')
+     'experience_level', 'summary', 'zipcode', 'recent_project', 'work_seeking')
 
 
 class SpecialCredentialCreationForm(forms.ModelForm):

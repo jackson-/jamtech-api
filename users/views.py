@@ -2,6 +2,7 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.mixins import UpdateModelMixin
 from . import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
@@ -21,7 +22,7 @@ class UserListView(generics.ListCreateAPIView):
     pagination_class = StandardResultsSetPagination
     authentication_classes = (TokenAuthentication,)
 
-class UserDetailView(generics.RetrieveAPIView):
+class UserDetailView(generics.RetrieveAPIView, generics.UpdateAPIView):
     
     lookup_field = "id"
     queryset = models.CustomUser.objects.all()
@@ -35,6 +36,19 @@ class UserDetailView(generics.RetrieveAPIView):
         if request.user and id == 'me':
             return Response(serializers.UserSerializer(request.user).data)
         return super(UserDetailView, self).retrieve(request, id)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if(request.data['profile']):
+            profile = models.BusinessProfile.objects.get(id=request.data['profile'])
+            instance.profile = profile
+            instance.save()
+        models.CustomUser.objects.filter(id=kwargs['id']).update(**request.data)
+        user = models.CustomUser.objects.select_related('profile').get(id=kwargs['id'])
+        return Response(serializers.UserSerializer(user).data)
+
+
+
 
 
 
