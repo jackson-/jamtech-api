@@ -18,7 +18,7 @@ class CustomRegisterSerializer(RegisterSerializer):
 
     email = serializers.EmailField(required=True)
     password1 = serializers.CharField(write_only=True)
-    name = serializers.CharField(required=True)
+    name = serializers.CharField(required=False)
     employer = serializers.BooleanField(required=True)
 
     def get_cleaned_data(self):
