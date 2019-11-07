@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_auth.registration.serializers import RegisterSerializer
 from . import models
+from rest_framework.authentication import authenticate
 
 
 
@@ -34,7 +35,10 @@ class CustomRegisterSerializer(RegisterSerializer):
 
     def save(self, *args, **kwargs):
         cleaned_data = self.get_cleaned_data()
-        return models.CustomUser.objects.create(**cleaned_data)
+        user = models.CustomUser.objects.create(**cleaned_data)
+        user.set_password(cleaned_data['password'])
+        user.save()
+        return user
 
 class CustomUserDetailsSerializer(serializers.ModelSerializer):
 

@@ -86,7 +86,7 @@ class ProfileListView(generics.ListCreateAPIView):
     filterset_fields = [f.name for f in models.BusinessProfile._meta.fields]
     authentication_classes = (TokenAuthentication,)
 
-class ProfileDetailView(generics.RetrieveAPIView):
+class ProfileDetailView(generics.RetrieveAPIView, generics.UpdateAPIView):
     lookup_field = "id"
     queryset = models.BusinessProfile.objects.all()
     serializer_class = serializers.ProfileSerializer
