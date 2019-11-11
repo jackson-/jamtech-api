@@ -1,5 +1,11 @@
+# environment variables
 env/*
+
+# VS Code configuration
 .vscode/
+
+# database
 db.sqlite3
+
+# cache files
 **/*.pyc
-.env

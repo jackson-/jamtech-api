@@ -54,13 +54,15 @@ class MyUserManager(BaseUserManager):
 
 class BusinessProfile(models.Model):
     company_name = models.CharField(blank=True, max_length=255)
+    company_website = models.CharField(blank=True, max_length=255)
+    company_phone = models.CharField(blank=True, max_length=255)
+    zipcode = models.CharField(blank=True, max_length=10)
     industry_category = models.CharField(blank=True, max_length=255)
     industry_segment = models.CharField(blank=True, max_length=255)
     experience_level = models.CharField(blank=True, max_length=255)
-    recent_project = models.CharField(blank=True, max_length=255)
-    work_seeking = models.CharField(blank=True, max_length=255)
-    summary = models.CharField(blank=True, max_length=255)
-    zipcode = models.CharField(blank=True, max_length=10)
+    recent_project = models.CharField(blank=True)
+    work_seeking = models.CharField(blank=True)
+    summary = models.CharField(blank=True)
 
     def __str__(self):
         return self.company_name
