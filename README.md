@@ -17,7 +17,9 @@
 - `python3 manage.py runserver`
 
 ## Live link
-[jamtech-api-ebs](http://jamtech-django-env.8yzvisztqt.us-east-1.elasticbeanstalk.com/)
+[jamtech-api-dns](http://ec2-54-165-229-90.compute-1.amazonaws.com)
+
+will switch to subdomain once turnover is completed
 
 
 ## Pagination Instructions
