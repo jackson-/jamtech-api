@@ -1,5 +1,6 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.parsers import FileUploadParser, MultiPartParser, JSONParser, FormParser
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.mixins import UpdateModelMixin
@@ -9,6 +10,12 @@ from rest_framework.authentication import TokenAuthentication
 
 from . import models
 from . import serializers
+
+import boto3
+from botocore.exceptions import NoCredentialsError
+
+ACCESS_KEY = 'AKIAJSU5KNHPGBPSQEFA'
+SECRET_KEY = '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'
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -91,3 +98,32 @@ class ProfileDetailView(generics.RetrieveAPIView, generics.UpdateAPIView):
     queryset = models.BusinessProfile.objects.all()
     serializer_class = serializers.ProfileSerializer
     authentication_classes = (TokenAuthentication,)
+    parser_classes = (MultiPartParser, JSONParser, FormParser, FileUploadParser)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if('image' in request.FILES):
+            img = request.FILES.get('image')
+            session = boto3.Session(aws_access_key_id=ACCESS_KEY,aws_secret_access_key=SECRET_KEY)
+            s3 = session.resource('s3')
+            try:
+                s3.Bucket('jamtech-images').put_object(Key='logos/%s' % img.name, Body=img)
+                print("Upload Successful")
+                instance.logo = "http://s3-us-east-1.amazonaws.com/jamtech-images/logos/{}".format(img.name)
+                instance.save()
+            except FileNotFoundError as e:
+                print("The file was not found")
+                return Response(e)
+            except NoCredentialsError as e:
+                print("Credentials not available")
+                return Response(e)
+            try:
+                del request.data['image']
+                models.BusinessProfile.objects.filter(id=kwargs['id']).update(**request.data)
+                return Response(serializers.ProfileSerializer(instance).data)
+            except Exception as e:
+                print("Problem updating the Profile model")
+                return Response(e)
+        models.BusinessProfile.objects.filter(id=kwargs['id']).update(**request.data)
+        instance.refresh_from_db()
+        return Response(serializers.ProfileSerializer(instance).data)
