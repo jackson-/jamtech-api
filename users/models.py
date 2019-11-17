@@ -61,6 +61,7 @@ class BusinessProfile(models.Model):
     work_seeking = models.CharField(blank=True, max_length=255)
     summary = models.CharField(blank=True, max_length=255)
     zipcode = models.CharField(blank=True, max_length=10)
+    logo = models.URLField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.company_name
