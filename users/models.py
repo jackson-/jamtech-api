@@ -60,12 +60,12 @@ class BusinessProfile(models.Model):
     industry_category = models.CharField(blank=True, max_length=255)
     industry_segment = models.CharField(blank=True, max_length=255)
     experience_level = models.CharField(blank=True, max_length=255)
-    recent_project = models.TextField(blank=True)
+    recent_projects = models.TextField(blank=True)
     work_seeking = models.TextField(blank=True)
     summary = models.TextField(blank=True)
 
-    def __str__(self):
-        return self.company_name
+    # def __str__(self):
+    #     return self.company_name
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(blank=True, max_length=255, null=True)

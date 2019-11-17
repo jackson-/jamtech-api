@@ -13,39 +13,33 @@
 - `python3 manage.py runserver`
 
 ## How to run server
+
 - `source env/bin/activate`
 - `python3 manage.py runserver`
 
 ## Live link
+
 [jamtech-api-dns](http://ec2-54-165-229-90.compute-1.amazonaws.com)
 
 will switch to subdomain once turnover is completed
 
-
 ## Pagination Instructions
+
 Example Request URL:
 `GET https://api.example.org/users/?page=4`
 
 Example Response:
-`
-HTTP 200 OK
-{
-    "count": 1023
-    "next": "https://api.example.org/users/?page=5",
-    "previous": "https://api.example.org/users/?page=3",
-    "results": [
-       …
-    ]
-}
-`
+`HTTP 200 OK { "count": 1023 "next": "https://api.example.org/users/?page=5", "previous": "https://api.example.org/users/?page=3", "results": [ … ] }`
 
 ## Filter Instructions
+
 Below are the queryable properties for business profiles:
+
 - company_name
 - industry_category
 - industry_segment
 - experience_level
-- recent_project
+- recent_projects
 - work_seeking
 - summary
 - zipcode

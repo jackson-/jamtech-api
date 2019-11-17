@@ -56,7 +56,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             'industry_category': self.validated_data.get('industry_category', ''),
             'industry_segment': self.validated_data.get('industry_segment', ''),
             'experience_level': self.validated_data.get('experience_level', ''),
-            'recent_project': self.validated_data.get('recent_project', ''),
+            'recent_projects': self.validated_data.get('recent_projects', ''),
             'work_seeking': self.validated_data.get('work_seeking', ''),
             'summary': self.validated_data.get('summary', ''),
             'zipcode': self.validated_data.get('zipcode', ''),
@@ -65,15 +65,16 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def save(self, *args, **kwargs):
         cleaned_data = self.get_cleaned_data()
-        return models.BusinessProfile.objects.create(**cleaned_data)
+        profile = models.BusinessProfile.objects.create(**cleaned_data)
+        profile.save()
+        return profile
 
     class Meta:
         model = models.BusinessProfile
-        fields = ('id','company_name', 'industry_category', 'industry_segment', 'experience_level',
-            'recent_project', 'work_seeking', 'summary', 'zipcode')
+        fields = ('id','company_name', 'industry_category', 'industry_segment', 'experience_level', 'recent_projects', 'work_seeking', 'summary', 'zipcode')
 
 class UserSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer(read_only=True)
+    profile = ProfileSerializer()
     class Meta:
         model = models.CustomUser
         fields = ('id', 'email', 'name', 'is_staff', 'employer', 'profile')
