@@ -61,13 +61,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             'summary': self.validated_data.get('summary', ''),
             'zipcode': self.validated_data.get('zipcode', ''),
         }
-        
-
-    def save(self, *args, **kwargs):
-        cleaned_data = self.get_cleaned_data()
-        profile = models.BusinessProfile.objects.create(**cleaned_data)
-        profile.save()
-        return profile
 
     class Meta:
         model = models.BusinessProfile

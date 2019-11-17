@@ -128,7 +128,3 @@ class ProfileDetailView(generics.RetrieveAPIView, generics.UpdateAPIView):
         instance.refresh_from_db()
         return Response(serializers.ProfileSerializer(instance).data)
 
-    def post(self, request, *args, **kwargs):
-        self.create(request, *args, **kwargs)
-        profile = models.BusinessProfile.objects.get(id=self['pk']) 
-        return Response(serializers.ProfileSerializer(profile).data)
