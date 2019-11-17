@@ -7,6 +7,8 @@ from rest_framework.mixins import UpdateModelMixin
 from . import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from rest_framework import filters
+
 
 from . import models
 from . import serializers
@@ -92,6 +94,8 @@ class ProfileListView(generics.ListCreateAPIView):
     pagination_class = StandardResultsSetPagination
     filterset_fields = [f.name for f in models.BusinessProfile._meta.fields]
     authentication_classes = (TokenAuthentication,)
+    filter_backends = [filters.SearchFilter]
+    search_fields = [f.name for f in models.BusinessProfile._meta.fields]
 
 class ProfileDetailView(generics.RetrieveAPIView, generics.UpdateAPIView):
     lookup_field = "id"
