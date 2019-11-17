@@ -54,17 +54,21 @@ class MyUserManager(BaseUserManager):
 
 class BusinessProfile(models.Model):
     company_name = models.CharField(blank=True, max_length=255)
+    company_website = models.CharField(blank=True, max_length=255)
+    company_phone = models.CharField(blank=True, max_length=255)
+    zipcode = models.CharField(blank=True, max_length=10)
     industry_category = models.CharField(blank=True, max_length=255)
     industry_segment = models.CharField(blank=True, max_length=255)
     experience_level = models.CharField(blank=True, max_length=255)
-    recent_project = models.CharField(blank=True, max_length=255)
+    recent_projects = models.CharField(blank=True, max_length=255)
     work_seeking = models.CharField(blank=True, max_length=255)
     summary = models.CharField(blank=True, max_length=255)
+    logo = models.URLField(max_length=200, blank=True, null=True)
     zipcode = models.CharField(blank=True, max_length=10)
     logo = models.URLField(max_length=200, blank=True, null=True)
 
-    def __str__(self):
-        return self.company_name
+    # def __str__(self):
+    #     return self.company_name
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(blank=True, max_length=255, null=True)
