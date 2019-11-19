@@ -13,16 +13,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='businessprofile',
             name='recent_projects',
-            field=models.CharField(blank=True),
+            field=models.TextField(blank=True),
         ),
         migrations.AlterField(
             model_name='businessprofile',
             name='summary',
-            field=models.CharField(blank=True),
+            field=models.TextField(blank=True),
         ),
         migrations.AlterField(
             model_name='businessprofile',
             name='work_seeking',
-            field=models.CharField(blank=True),
+            field=models.TextField(blank=True),
         ),
     ]
