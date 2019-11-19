@@ -62,13 +62,17 @@ class BusinessProfile(models.Model):
     experience_level = models.CharField(blank=True, max_length=255)
     recent_projects = models.CharField(blank=True, max_length=255)
     work_seeking = models.CharField(blank=True, max_length=255)
-    summary = models.CharField(blank=True, max_length=255)
+    summary = models.TextField(blank=True)
     logo = models.URLField(max_length=200, blank=True, null=True)
     zipcode = models.CharField(blank=True, max_length=10)
     logo = models.URLField(max_length=200, blank=True, null=True)
 
-    # def __str__(self):
-    #     return self.company_name
+
+    class Meta:
+        ordering = ['-id']
+
+    def __str__(self):
+        return self.company_name
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(blank=True, max_length=255, null=True)
@@ -112,4 +116,5 @@ class SpecialCredential(models.Model):
     business = models.ForeignKey(
         BusinessProfile,
         on_delete=models.CASCADE,
+        related_name='credentials',
     )

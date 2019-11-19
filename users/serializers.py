@@ -48,7 +48,14 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
         read_only_fields = ('email')
 
 
+class SpecialCredentialsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.SpecialCredential
+        fields = ('id','name', 'website')
+
 class ProfileSerializer(serializers.ModelSerializer):
+    credentials = SpecialCredentialsSerializer(many=True, read_only=True)
 
     def get_cleaned_data(self):
         return {
@@ -64,7 +71,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.BusinessProfile
-        fields = ('id','company_name', 'industry_category', 'industry_segment', 'experience_level', 'recent_projects', 'work_seeking', 'summary', 'zipcode', 'logo')
+        fields = ('id','company_name', 'industry_category', 'industry_segment', 'experience_level', 'recent_projects', 'work_seeking', 'summary', 'zipcode', 'logo', 'credentials')
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()

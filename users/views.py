@@ -14,7 +14,7 @@ from . import models
 from . import serializers
 
 import boto3
-from botocore.exceptions import NoCredentialsError
+# from botocore.exceptions import NoSpecialCredentialsError
 
 ACCESS_KEY = 'AKIAJSU5KNHPGBPSQEFA'
 SECRET_KEY = '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'
@@ -118,9 +118,9 @@ class ProfileDetailView(generics.RetrieveAPIView, generics.UpdateAPIView):
             except FileNotFoundError as e:
                 print("The file was not found")
                 return Response(e)
-            except NoCredentialsError as e:
-                print("Credentials not available")
-                return Response(e)
+            # except NoSpecialCredentialsError as e:
+            #     print("SpecialCredentials not available")
+            #     return Response(e)
             try:
                 del request.data['image']
                 models.BusinessProfile.objects.filter(id=kwargs['id']).update(**request.data)
