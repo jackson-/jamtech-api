@@ -8,4 +8,4 @@ env/*
 db.sqlite3
 
 # cache files
-/**/*.pyc
+**/**/*.pyc
