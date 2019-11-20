@@ -8,6 +8,7 @@ from . import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
+from django.forms.models import model_to_dict
 
 
 from . import models
@@ -96,6 +97,16 @@ class ProfileListView(generics.ListCreateAPIView):
     authentication_classes = (TokenAuthentication,)
     filter_backends = [filters.SearchFilter]
     search_fields = [f.name for f in models.BusinessProfile._meta.fields]
+
+    def create(self, request):
+        response = super(ProfileListView, self).create(request)
+        profile = models.BusinessProfile.objects.get(id=response.data['id'])
+        if(request.data.get('credentials')):
+            creds = request.data.get('credentials')
+            for c in creds:
+                c['business'] = profile
+                models.SpecialCredential.objects.create(**c)
+        return Response(serializers.ProfileSerializer(profile).data)
 
 class ProfileDetailView(generics.RetrieveAPIView, generics.UpdateAPIView):
     lookup_field = "id"
