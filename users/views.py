@@ -1,7 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.parsers import FileUploadParser, MultiPartParser, JSONParser, FormParser
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import PageNumberPagination, InvalidPage
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.mixins import UpdateModelMixin
 from . import serializers
@@ -9,7 +9,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
 from django.forms.models import model_to_dict
-
 
 from . import models
 from . import serializers
@@ -22,9 +21,21 @@ SECRET_KEY = 'UH1i5ZQYD6PY2viBgYpakxJreNgmngeVhnTmRBZd'
 
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 100
+    page_size = 5
     page_size_query_param = 'page_size'
-    max_page_size = 1000    
+    max_page_size = 1000
+
+    def get_paginated_response(self, data):
+        return Response({
+            'links': {
+               'next': self.get_next_link(),
+               'previous': self.get_previous_link()
+            },
+            'count': self.page.paginator.count,
+            'total_pages': self.page.paginator.num_pages,
+            'results': data
+        })
+
 
 class UserListView(generics.ListCreateAPIView):
     queryset = models.CustomUser.objects.all()
@@ -114,6 +125,16 @@ class ProfileDetailView(generics.RetrieveAPIView, generics.UpdateAPIView):
     serializer_class = serializers.ProfileSerializer
     authentication_classes = (TokenAuthentication,)
     parser_classes = (MultiPartParser, JSONParser, FormParser, FileUploadParser)
+
+    def update(self, request):
+        response = super(ProfileListView, self).update(request)
+        profile = models.BusinessProfile.objects.get(id=response.data['id'])
+
+        if(request.data.get('credentials')):
+            creds = request.data.get('credentials')
+            for c in creds:
+                models.BusinessProfile.objects.filter(id=c['id']).update(**c)
+        return Response(serializers.ProfileSerializer(profile).data)
 
     # def update(self, request, *args, **kwargs):
     #     instance = self.get_object()
