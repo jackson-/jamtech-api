@@ -6,3 +6,6 @@ django-allauth
 django-rest-auth
 django_filters
 django-cors-headers
+boto3
+botocore
+django-phone-field
