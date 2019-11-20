@@ -9,3 +9,7 @@ django-cors-headers
 boto3
 botocore
 django-phone-field
+gunicorn
+dj-database-url
+whitenoise
+psycopg2
