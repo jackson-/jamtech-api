@@ -54,6 +54,13 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'users.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jackson.t.devin@gmail.com'
+EMAIL_HOST_PASSWORD = 'viyqjazndomfjmfp'
+DEFAULT_FROM_EMAIL  = 'jackson.t.devin@gmail.com'
+SERVER_EMAIL = 'jackson.t.devin@gmail.com'
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`

@@ -61,6 +61,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         return {
             'company_name': self.validated_data.get('company_name', ''),
             'industry_category': self.validated_data.get('industry_category', ''),
+            'company_website': self.validated_data.get('company_website', ''),
+            'company_phone': self.validated_data.get('company_phone', ''),
             'industry_segment': self.validated_data.get('industry_segment', ''),
             'experience_level': self.validated_data.get('experience_level', ''),
             'recent_projects': self.validated_data.get('recent_projects', ''),
@@ -71,7 +73,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.BusinessProfile
-        fields = ('id','company_name', 'industry_category', 'industry_segment', 'experience_level', 'recent_projects', 'work_seeking', 'summary', 'zipcode', 'logo', 'credentials')
+        fields = ('id','company_name', 'industry_category', 'industry_segment', 
+        'experience_level', 'recent_projects', 'work_seeking', 'summary',
+         'zipcode', 'logo', 'credentials', 'company_phone', 'company_website')
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
