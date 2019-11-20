@@ -12,6 +12,6 @@ django-phone-field
 gunicorn
 dj-database-url
 whitenoise
-psycopg2
+psycopg2==2.7.2
 psycopg2-binary
 django-heroku

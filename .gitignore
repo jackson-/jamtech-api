@@ -9,3 +9,7 @@ db.sqlite3
 
 # cache files
 **/**/*.pyc
+
+*.pyc
+__pycache__
+local_settings.py
