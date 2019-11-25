@@ -120,12 +120,15 @@ class ProfileDetailView(generics.RetrieveAPIView, generics.UpdateAPIView):
     authentication_classes = (TokenAuthentication,)
     parser_classes = (MultiPartParser, JSONParser, FormParser, FileUploadParser)
 
-    def update(self, request):
-        response = super(ProfileListView, self).update(request)
+    def update(self, request, *args, **kwargs):
+        response = super(ProfileDetailView , self).update(request, args, kwargs)
         profile = models.BusinessProfile.objects.get(id=response.data['id'])
-
+        profile.credentials.all().delete()
         if(request.data.get('credentials')):
             creds = request.data.get('credentials')
-            for c in creds:
-                models.BusinessProfile.objects.filter(id=c['id']).update(**c)
+            new_creds = []
+            for cred in creds:
+                    cred['business'] = profile
+                    new_creds.append(models.SpecialCredential.objects.create(**cred))
+            profile.credentials.set(new_creds)
         return Response(serializers.ProfileSerializer(profile).data)
