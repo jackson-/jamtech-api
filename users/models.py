@@ -56,7 +56,7 @@ class MyUserManager(BaseUserManager):
 
 class BusinessProfile(models.Model):
     company_name = models.CharField(blank=True, max_length=255)
-    company_website = models.URLField(blank=True, null=True)
+    company_website = models.TextField(blank=True, null=True)
     company_phone = PhoneField(null=True, blank=True, unique=False)
     zipcode = models.CharField(blank=True, max_length=5)
     industry_category = models.CharField(blank=True, max_length=255)
